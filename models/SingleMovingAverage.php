@@ -18,7 +18,7 @@ class SingleMovingAverage
     $MAPE = $this->MAPE($data,$MAD['absError'],$space,$ma);
     
     // menambahkan 1 index ke data
-    array_push($data, array(NULL, NULL));
+    array_push($data, array($this->label_now(), NULL));
     return array(
       'data'=>$data,
       'MA'=>$MA,
@@ -148,6 +148,15 @@ class SingleMovingAverage
       'percent' => $percentError,
       'MAPE' => $MAPE
     );
+  }
+
+  public function label_now()
+  {
+    $tanggal = new \DateTime('now');
+    $bulan = $this->intToMonth($tanggal->format('m') - 1);
+    $tahun = $tanggal->format('Y');
+
+    return $bulan.' ('.$tahun.')';
   }
 
   public function intToMonth($i)
