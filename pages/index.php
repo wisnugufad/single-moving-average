@@ -54,7 +54,7 @@
 			 height: 500px !important;
 		 }
 	 </style>
-	 <link rel="stylesheet" href="../assests/dist/css/bootstrap.min.css">
+	 <link rel="stylesheet" href="../assets/dist/css/bootstrap.min.css">
  </head>
  <body>
 
@@ -171,9 +171,9 @@
 
 
 	 <!-- JS -->
-	 	<script src="../assests/dist/js/jquery.min.js"></script>
-	 	<script src="../assests/dist/js/bootstrap.min.js"></script>
-	 	<script src="../assests/dist/js/chart.min.js"></script>
+	 	<script src="../assets/dist/js/jquery.min.js"></script>
+	 	<script src="../assets/dist/js/bootstrap.min.js"></script>
+	 	<script src="../assets/dist/js/chart.min.js"></script>
 	 <!-- chart -->
 		<script>
 			var ctx = document.getElementById('myChart').getContext('2d');
