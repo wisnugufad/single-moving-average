@@ -24,6 +24,23 @@ class m_rekap_penjualan extends Connection
     return $result;
   }
 
+  public function get_tabel()
+  {
+    $sql = 'SELECT * FROM tb_rekap_penjualan ORDER BY id DESC';
+    $query = mysqli_query($this->koneksi,$sql);
+    $result = array();
+    while ($row = MYSQLI_FETCH_ASSOC($query)) {
+      array_push($result,array(
+        'id'=>$row['id'],
+        'bulan'=>$row['bulan'],
+        'tahun'=>$row['tahun'],
+        'total_penjualan'=>$row['total_penjualan']
+      ));
+    }
+
+    return $result;
+  }
+
   public function get_label()
   {
     $sql = 'SELECT tahun, bulan FROM tb_rekap_penjualan';
