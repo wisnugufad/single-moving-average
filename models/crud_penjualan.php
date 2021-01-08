@@ -8,9 +8,10 @@ if (isset($_POST['submit'])) {
     
     $tahun = $_POST['tahun'];
     $bulan = $_POST['bulan'];
-    $total_penjualan = $_POST['total_penjualan'];
+    $dry_food = $_POST['dry_food'];
+    $wet_food = $_POST['wet_food'];
 
-    $sql = "INSERT INTO tb_rekap_penjualan (`tahun`,`bulan`, `total_penjualan`) VALUES('$tahun','$bulan','$total_penjualan')";
+    $sql = "INSERT INTO tb_rekap_penjualan (`tahun`,`bulan`, `dry_food`, `wet_food`) VALUES('$tahun','$bulan','$dry_food','$wet_food')";
     $query = MYSQLI_QUERY($connect,$sql);
 
     if($query){
@@ -21,9 +22,10 @@ if (isset($_POST['submit'])) {
     $id = $_POST['id'];
     $tahun = $_POST['tahun'];
     $bulan = $_POST['bulan'];
-    $total_penjualan = $_POST['total_penjualan'];
+    $dry_food = $_POST['dry_food'];
+    $wet_food = $_POST['wet_food'];
 
-    $sql = "UPDATE tb_rekap_penjualan SET `tahun` = '$tahun', `bulan`='$bulan', `total_penjualan`='$total_penjualan' WHERE id= '$id' ";
+    $sql = "UPDATE tb_rekap_penjualan SET `tahun` = '$tahun', `bulan`='$bulan', `dry_food`='$dry_food', `wet_food`='$wet_food' WHERE id= '$id' ";
     $query = MYSQLI_QUERY($connect,$sql);
 
     if($query){

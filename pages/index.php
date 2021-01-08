@@ -2,14 +2,16 @@
 	
 	include '../models/SingleMovingAverage.php';
 	include '../models/m_rekap_penjualan.php';
+	// session_start();
 
 	$m_rekap = new m_rekap_penjualan();
 	$sma = new SingleMovingAverage();
 
-	$data = $m_rekap->get_data();
-	$index = count($data);
-
 	if (isset($_POST['generate'])) {
+		$type = $_POST['type'];
+		$data = $m_rekap->get_data($type );
+		$index = count($data);
+
 		$ma1 = $_POST['ma1'];
 		$ma2 = $_POST['ma2'];
 
@@ -35,6 +37,9 @@
 		}
 
 		$index = count($hasil['data']);
+	} else {
+		$data = $m_rekap->get_data('dry_food');
+		$index = count($data);
 	}
 
  ?>
@@ -87,6 +92,13 @@
 								echo '<option value='.$i.' >'.$i.'</option>';
 							}
 						?>
+					</select>
+				</div>
+				<div class="col-md-3">
+					<label for="formGroupExampleInput">Tipe Makanan</label>
+					<select class="form-control form-control-sm" name="type" value="<?php echo $type ?>">
+						<option value="dry_food">Dry Food</option>
+						<option value="wet_food">Wet Food</option>
 					</select>
 				</div>
 				<input type="submit" class="btn btn-primary" name="generate" value="generate">
@@ -147,7 +159,7 @@
 				for ($i=0; $i < $index ; $i++) {
 			?>
 			<tr>
-				<td> <?php echo  $i; ?> </td>
+				<td> <?php echo  $i+1; ?> </td>
 				<td> <?php echo  $hasil['data'][$i][0]; ?> </td>
 				<td> <?php echo  $hasil['data'][$i][1]; ?> </td>
 				<td> <?php echo  $hasil['MA'][$i]; ?> </td>
@@ -231,6 +243,8 @@
 							}
 					}
 			});
+			// logout
+			
 		</script>
  </body>
  </html>

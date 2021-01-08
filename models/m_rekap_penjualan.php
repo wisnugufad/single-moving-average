@@ -9,9 +9,17 @@ class m_rekap_penjualan extends Connection
 		parent::__construct();
   }
 
-  public function get_data()
+  public function get_data($type)
   {
-    $sql = 'SELECT * FROM tb_rekap_penjualan';
+    $sql = 'SELECT ';
+    //  * FROM tb_rekap_penjualan';
+    if ($type == 'dry_food') {
+      $sql .= 'id, bulan, tahun, dry_food as total_penjualan';
+    } else {
+      $sql .= 'id, bulan, tahun, wet_food as total_penjualan';
+    }
+    $sql .= ' FROM tb_rekap_penjualan';
+
     $query = mysqli_query($this->koneksi,$sql);
     $result = array();
     while ($row = MYSQLI_FETCH_ASSOC($query)) {
@@ -34,7 +42,8 @@ class m_rekap_penjualan extends Connection
         'id'=>$row['id'],
         'bulan'=>$row['bulan'],
         'tahun'=>$row['tahun'],
-        'total_penjualan'=>$row['total_penjualan']
+        'dry_food'=>$row['dry_food'],
+        'wet_food'=>$row['wet_food']
       ));
     }
 

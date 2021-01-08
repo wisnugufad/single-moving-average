@@ -40,7 +40,8 @@ $data = $m_rekap->get_tabel();
 				<th hidden>Id</th>
 				<th>Tahun</th>
 				<th>Bulan</th>
-				<th>Penjualan</th>
+				<th>Dry Food</th>
+				<th>Wet Food</th>
 				<th>Aksi</th>
 			</thead>
 			<tbody>
@@ -54,7 +55,8 @@ $data = $m_rekap->get_tabel();
 						<td hidden> <?php echo  $row['id']; ?> </td>
 						<td> <?php echo  $row['tahun']; ?> </td>
 						<td> <?php echo  $row['bulan']; ?> </td>
-						<td> <?php echo  $row['total_penjualan']; ?> </td>
+						<td> <?php echo  $row['dry_food']; ?> </td>
+						<td> <?php echo  $row['wet_food']; ?> </td>						
 						<td style="width: 150px !important;">
 							<button class="btn btn-info btn-sm editBtn" id="edit">edit</button>
 							<button class="btn btn-danger btn-sm deleteBtn" id="hapus">hapus</button>
@@ -81,8 +83,10 @@ $data = $m_rekap->get_tabel();
 						<input class="form-control" type="text" name="tahun" id="tahun" required autocomplete="off">
 						<label for="name" style="margin-top: 10px;">Bulan:</label>
 						<input class="form-control" type="text" name="bulan" id="bulan" required autocomplete="off">
-						<label for="name" style="margin-top: 10px;">Penjualan:</label>
-						<input class="form-control" type="number" name="total_penjualan" id="total_penjualan" required autocomplete="off">
+						<label for="name" style="margin-top: 10px;">Penjualan Dry Food:</label>
+						<input class="form-control" type="number" name="dry_food" id="dry_food" required autocomplete="off">
+						<label for="name" style="margin-top: 10px;">Penjualan Wet Food:</label>
+						<input class="form-control" type="number" name="wet_food" id="wet_food" required autocomplete="off">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -135,7 +139,8 @@ $data = $m_rekap->get_tabel();
 				$('#type').val('add');
 				$('#tahun').val('');
 				$('#bulan').val('');
-				$('#total_penjualan').val(0);
+				$('#dry_food').val(0);
+				$('#wet_food').val(0);
 			})
 
 			$('.editBtn').on('click', function() {
@@ -152,7 +157,8 @@ $data = $m_rekap->get_tabel();
 				$('#type').val('edit');
 				$('#tahun').val(data[2]);
 				$('#bulan').val(data[3]);
-				$('#total_penjualan').val(parseInt(data[3]));
+				$('#dry_food').val(parseInt(data[4]));
+				$('#wet_food').val(parseInt(data[5]));
 			})
 
 			$('.deleteBtn').on('click', function() {
