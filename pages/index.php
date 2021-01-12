@@ -13,10 +13,10 @@
 		$index = count($data);
 
 		$ma1 = $_POST['ma1'];
-		$ma2 = $_POST['ma2'];
+		// $ma2 = $_POST['ma2'];
 
 		$hasil = $sma->countStart($data,$ma1);
-		$hasil2 = $sma->countStart($data,$ma2);
+		// $hasil2 = $sma->countStart($data,$ma2);
 
 		$label = array();
 		$data1 = array();
@@ -32,9 +32,9 @@
 			array_push($data2,$value);
 		}
 
-		foreach ($hasil2['MA'] as $value) {
-			array_push($data3,$value);
-		}
+		// foreach ($hasil2['MA'] as $value) {
+		// 	array_push($data3,$value);
+		// }
 
 		$index = count($hasil['data']);
 	} else {
@@ -74,7 +74,7 @@
 		<!-- filter -->
 		<form action="" method="POST" class="form-group">
 		<div class="row">
-				<div class="col-md-3">
+				<div class="col-md">
 					<label for="formGroupExampleInput">MA data 1</label>
 					<select class="form-control form-control-sm" name="ma1" value="<?php isset($_POST['ma1'])?$ma1:5; ?>" >
 						<?php
@@ -84,7 +84,7 @@
 						?>
 					</select>
 				</div>
-				<div class="col-md-3">
+				<!-- <div class="col-md-3">
 					<label for="formGroupExampleInput">MA data 2</label>
 					<select class="form-control form-control-sm" name="ma2" value="<?php echo $ma2 ?>">
 						<?php
@@ -93,8 +93,8 @@
 							}
 						?>
 					</select>
-				</div>
-				<div class="col-md-3">
+				</div> -->
+				<div class="col-md">
 					<label for="formGroupExampleInput">Tipe Makanan</label>
 					<select class="form-control form-control-sm" name="type" value="<?php echo $type ?>">
 						<option value="dry_food">Dry Food</option>
@@ -118,7 +118,7 @@
 		<br>
 
 		<div class="row" style="margin-bottom: 18px;">
-			<div class="col-lg-6">
+			<div class="col-lg">
 								<div class="card text-white" style="background-color: #3f52cc">
 			      <div class="card-body" style="padding: 10px 20px;">
 			        <h6 class="card-title">Mape Prediksi MA(<?php echo $ma1 ?>)</h6>
@@ -127,7 +127,7 @@
 			      </div>
 			    </div>
 			</div>
-			<div class="col-lg-6">
+			<!-- <div class="col-lg">
 								<div class="card text-white" style="background-color: #ff6a00;">
 						<div class="card-body" style="padding: 10px 20px;">
 			        <h6 class="card-title">Mape Prediksi MA(<?php echo $ma2 ?>)</h6>
@@ -135,7 +135,7 @@
 			        	<?php echo $hasil2['MAPE'] ?></div>
 			      </div>
 			    </div>
-			</div>
+			</div> -->
 		</div>
 
 		<table class="table">
@@ -148,11 +148,11 @@
 				<th>|Error|</th>
 				<th>Error^2</th> -->
 				<th>% Error(<?php echo $ma1 ?>)</th>
-				<th>MA(<?php echo $ma2 ?>)</th>
+				<!-- <th>MA(<?php echo $ma2 ?>)</th> -->
 				<!-- <th>Error</th>
 				<th>|Error|</th>
 				<th>Error^2</th> -->
-				<th>% Error(<?php echo $ma2 ?>)</th>
+				<!-- <th>% Error(<?php echo $ma2 ?>)</th> -->
 		 </thead>
 		 <tbody>
 			<?php
@@ -167,8 +167,8 @@
 				<!-- <td> <?php echo  $hasil['abs'][$i]; ?> </td> -->
 				<!-- <td> <?php echo  $hasil['pow'][$i]; ?> </td> -->
 				<td> <?php echo  $hasil['percent'][$i]; ?> </td>
-				<td> <?php echo  $hasil2['MA'][$i]; ?> </td>
-				<td> <?php echo  $hasil2['percent'][$i]; ?> </td>
+				<!-- <td> <?php echo  $hasil2['MA'][$i]; ?> </td>
+				<td> <?php echo  $hasil2['percent'][$i]; ?> </td> -->
 			</tr>
 			<?php } ?>
 		 </tbody>
@@ -217,19 +217,21 @@
 											'rgba(63, 82, 204, 1)'
 									],
 									borderWidth: 1
-							}, {
-									label: 'Pola Data Ramalan 2',
-									fill: false,
-									// borderDash: [5, 5],
-									data: <?php echo json_encode($data3); ?>,
-									backgroundColor: [
-											'rgba(255, 106, 0, 0.1)'
-									],
-									borderColor: [
-											'rgba(255, 106, 0, 1)'
-									],
-									borderWidth: 1
-							}]
+							},
+							// {
+							// 		label: 'Pola Data Ramalan 2',
+							// 		fill: false,
+							// 		// borderDash: [5, 5],
+							// 		data: <?php echo json_encode($data3); ?>,
+							// 		backgroundColor: [
+							// 				'rgba(255, 106, 0, 0.1)'
+							// 		],
+							// 		borderColor: [
+							// 				'rgba(255, 106, 0, 1)'
+							// 		],
+							// 		borderWidth: 1
+							// }
+						]
 					},
 					options: {
 						responsive: true,
