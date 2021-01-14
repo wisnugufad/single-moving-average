@@ -8,12 +8,12 @@
 	$sma = new SingleMovingAverage();
 
 	if (isset($_POST['generate'])) {
+
 		$type = $_POST['type'];
 		$data = $m_rekap->get_data($type );
 		$index = count($data);
 
 		$ma1 = $_POST['ma1'];
-		// $ma2 = $_POST['ma2'];
 
 		$hasil = $sma->countStart($data,$ma1);
 		// $hasil2 = $sma->countStart($data,$ma2);
@@ -140,13 +140,13 @@
 
 		<table class="table">
 		 <thead class="thead-dark">
-				<th>No</th>
-				<th>Bulan</th>
+				<th style="width: 30px;">No</th>
+				<th style="min-width: 150px;">Bulan</th>
 				<th>Data</th>
 				<th>MA(<?php echo $ma1 ?>)</th>
-				<!-- <th>Error</th>
+				<th>Error</th>
 				<th>|Error|</th>
-				<th>Error^2</th> -->
+				<th>Error^2</th>
 				<th>% Error(<?php echo $ma1 ?>)</th>
 				<!-- <th>MA(<?php echo $ma2 ?>)</th> -->
 				<!-- <th>Error</th>
@@ -163,9 +163,9 @@
 				<td> <?php echo  $hasil['data'][$i][0]; ?> </td>
 				<td> <?php echo  $hasil['data'][$i][1]; ?> </td>
 				<td> <?php echo  $hasil['MA'][$i]; ?> </td>
-				<!-- <td> <?php echo  $hasil['error'][$i]; ?> </td> -->
-				<!-- <td> <?php echo  $hasil['abs'][$i]; ?> </td> -->
-				<!-- <td> <?php echo  $hasil['pow'][$i]; ?> </td> -->
+				<td> <?php echo  $hasil['error'][$i]; ?> </td>
+				<td> <?php echo  $hasil['abs'][$i]; ?> </td>
+				<td> <?php echo  $hasil['pow'][$i]; ?> </td>
 				<td> <?php echo  $hasil['percent'][$i]; ?> </td>
 				<!-- <td> <?php echo  $hasil2['MA'][$i]; ?> </td>
 				<td> <?php echo  $hasil2['percent'][$i]; ?> </td> -->

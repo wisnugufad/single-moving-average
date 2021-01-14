@@ -39,7 +39,7 @@ class SingleMovingAverage
     $MA = array_fill(0,$index + 1,NULL);
 
     // looping
-    for ($i=$ma; $i < $index; $i++) { 
+    for ($i=$ma-1; $i < $index; $i++) { 
 
       // inisiali dan reset temp
       $temp = 0;
@@ -61,7 +61,7 @@ class SingleMovingAverage
     $error = array();
     $error = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i=$ma + 1; $i < $index ; $i++) { 
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
       $error[$i] = $data[$i][1] - $MA[$i];
     }
@@ -74,7 +74,7 @@ class SingleMovingAverage
     $absError = array();
     $absError = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i=$ma + 1; $i < $index ; $i++) { 
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
       $absError[$i] = abs($error[$i]);
     }
@@ -101,7 +101,7 @@ class SingleMovingAverage
     $powError = array();
     $powError = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i=$ma + 1; $i < $index ; $i++) { 
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
       $powError[$i] = pow($absError[$i],2);
     }
@@ -128,7 +128,7 @@ class SingleMovingAverage
     $percentError = array();
     $percentError = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i=$ma + 1; $i < $index ; $i++) { 
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
       $percentError[$i] = round($absError[$i] / $data[$i][1] * 100 , 2);
     }
