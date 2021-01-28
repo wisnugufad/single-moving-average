@@ -105,7 +105,7 @@
 				<div class="col-md">
 					<label for="formGroupExampleInput">Periode Prediksi</label>
 					<select class="form-control form-control-sm" name="periode">
-						<?php for($i = 2; $i < 13; $i++){
+						<?php for($i = 1; $i < 13; $i++){
 						echo '<option value="'.$i.'" >'.$i.' bulan</option>';
 						} ?>
 					</select>
