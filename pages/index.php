@@ -14,8 +14,9 @@
 		$index = count($data);
 
 		$ma1 = $_POST['ma1'];
+		$periode = $_POST['periode'];
 
-		$hasil = $sma->countStart($data,$ma1);
+		$hasil = $sma->countStart($data,$ma1,$periode);
 		// $hasil2 = $sma->countStart($data,$ma2);
 
 		$label = array();
@@ -96,9 +97,17 @@
 				</div> -->
 				<div class="col-md">
 					<label for="formGroupExampleInput">Tipe Makanan</label>
-					<select class="form-control form-control-sm" name="type" value="<?php echo $type ?>">
+					<select class="form-control form-control-sm" name="type">
 						<option value="dry_food">Dry Food</option>
 						<option value="wet_food">Wet Food</option>
+					</select>
+				</div>
+				<div class="col-md">
+					<label for="formGroupExampleInput">Periode Prediksi</label>
+					<select class="form-control form-control-sm" name="periode">
+						<?php for($i = 2; $i < 13; $i++){
+						echo '<option value="'.$i.'" >'.$i.' bulan</option>';
+						} ?>
 					</select>
 				</div>
 				<input type="submit" class="btn btn-primary" name="generate" value="generate">
