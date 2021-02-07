@@ -8,13 +8,15 @@ if (isset($_POST['submit'])) {
     
     $tahun = $_POST['tahun'];
     $bulan = $_POST['bulan'];
-    $dry_food = $_POST['dry_food'];
-    $wet_food = $_POST['wet_food'];
+    $bolt_ikan = $_POST['bolt_ikan'];
+    $whiskas = $_POST['whiskas'];
+    $ciao = $_POST['ciao'];
 
-    $sql = "INSERT INTO tb_rekap_penjualan (`tahun`,`bulan`, `dry_food`, `wet_food`) VALUES('$tahun','$bulan','$dry_food','$wet_food')";
+    $sql = "INSERT INTO tb_rekap_penjualan (`tahun`, `bulan`, `bolt_ikan`, `whiskas`, `ciao`)  VALUES('$tahun','$bulan','$bolt_ikan','$whiskas','$ciao')";
     $query = MYSQLI_QUERY($connect,$sql);
 
     if($query){
+      unset($_POST);
       $result = notification('success','Add');;
     }
   } elseif ($_POST['type'] == 'edit') {
@@ -22,13 +24,15 @@ if (isset($_POST['submit'])) {
     $id = $_POST['id'];
     $tahun = $_POST['tahun'];
     $bulan = $_POST['bulan'];
-    $dry_food = $_POST['dry_food'];
-    $wet_food = $_POST['wet_food'];
+    $bolt_ikan = $_POST['bolt_ikan'];
+    $whiskas = $_POST['whiskas'];
+    $ciao = $_POST['ciao'];
 
-    $sql = "UPDATE tb_rekap_penjualan SET `tahun` = '$tahun', `bulan`='$bulan', `dry_food`='$dry_food', `wet_food`='$wet_food' WHERE id= '$id' ";
+    $sql = "UPDATE tb_rekap_penjualan SET `tahun` = '$tahun', `bulan`='$bulan', `bolt_ikan`='$bolt_ikan', `whiskas`='$whiskas', `ciao`='$ciao' WHERE id= '$id' ";
     $query = MYSQLI_QUERY($connect,$sql);
 
     if($query){
+      unset($_POST);
       $result = notification('success','Edit');
     }
   } else {
@@ -37,6 +41,7 @@ if (isset($_POST['submit'])) {
     $query = MYSQLI_QUERY($connect,$sql);
 
     if($query){
+      unset($_POST);
       $result = notification('success','Delete');
     }
   }

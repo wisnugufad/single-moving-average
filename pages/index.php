@@ -7,16 +7,23 @@
 	$m_rekap = new m_rekap_penjualan();
 	$sma = new SingleMovingAverage();
 
+	// nentuin periode yang akan di forecast
+	$combo = $m_rekap->get_min();
+	$tahun_awal = $combo['tahun'] + 1;
+	$tanggal = new \DateTime('now');
+	$tahun_akhir = $tanggal->format('Y');
+
 	if (isset($_POST['generate'])) {
 
 		$type = $_POST['type'];
-		$data = $m_rekap->get_data($type );
+		$tahun_prediksi = $_POST['periode'];
+		$data = $m_rekap->get_data($type,$tahun_prediksi);
 		$index = count($data);
 
 		$ma1 = $_POST['ma1'];
-		$periode = $_POST['periode'];
 
-		$hasil = $sma->countStart($data,$ma1,$periode);
+		// perioder satu tahun jadi hardcode selama 12
+		$hasil = $sma->countStart($data,$ma1,12,$tahun_prediksi);
 		// $hasil2 = $sma->countStart($data,$ma2);
 
 		$label = array();
@@ -38,9 +45,6 @@
 		// }
 
 		$index = count($hasil['data']);
-	} else {
-		$data = $m_rekap->get_data('dry_food');
-		$index = count($data);
 	}
 
  ?>
@@ -79,7 +83,7 @@
 					<label for="formGroupExampleInput">MA data 1</label>
 					<select class="form-control form-control-sm" name="ma1" value="<?php isset($_POST['ma1'])?$ma1:5; ?>" >
 						<?php
-							for($i = 5; $i < $index - 5; $i++) {
+							for($i = 3; $i < 12; $i++) {
 								echo '<option value='.$i.' >'.$i.'</option>';
 							}
 						?>
@@ -103,10 +107,10 @@
 					</select>
 				</div>
 				<div class="col-md">
-					<label for="formGroupExampleInput">Periode Prediksi</label>
-					<select class="form-control form-control-sm" name="periode">
-						<?php for($i = 1; $i < 13; $i++){
-						echo '<option value="'.$i.'" >'.$i.' bulan</option>';
+					<label>Tahun Prediksi</label>
+					<select class="form-control form-control-sm" name="periode" id="">
+					<?php for($i = $tahun_awal; $i <= $tahun_akhir; $i++){
+						echo '<option value="'.$i.'" >'.$i.'</option>';
 						} ?>
 					</select>
 				</div>

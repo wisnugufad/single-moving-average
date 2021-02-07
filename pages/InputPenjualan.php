@@ -40,8 +40,9 @@ $data = $m_rekap->get_tabel();
 				<th hidden>Id</th>
 				<th>Tahun</th>
 				<th>Bulan</th>
-				<th>Dry Food</th>
-				<th>Wet Food</th>
+				<th>Bolt Ikan (kg)</th>
+				<th>Whiskas Jun 85 gr (pcs)</th>
+				<th>Ciao 15gr (pcs)</th>
 				<th>Aksi</th>
 			</thead>
 			<tbody>
@@ -55,8 +56,9 @@ $data = $m_rekap->get_tabel();
 						<td hidden> <?php echo  $row['id']; ?> </td>
 						<td> <?php echo  $row['tahun']; ?> </td>
 						<td> <?php echo  $row['bulan']; ?> </td>
-						<td> <?php echo  $row['dry_food']; ?> </td>
-						<td> <?php echo  $row['wet_food']; ?> </td>						
+						<td> <?php echo  $row['bolt_ikan']; ?> </td>
+						<td> <?php echo  $row['whiskas']; ?> </td>
+						<td> <?php echo  $row['ciao']; ?> </td>						
 						<td style="width: 150px !important;">
 							<button class="btn btn-info btn-sm editBtn" id="edit">edit</button>
 							<button class="btn btn-danger btn-sm deleteBtn" id="hapus">hapus</button>
@@ -83,13 +85,15 @@ $data = $m_rekap->get_tabel();
 						<input class="form-control" type="text" name="tahun" id="tahun" required autocomplete="off">
 						<label for="name" style="margin-top: 10px;">Bulan:</label>
 						<input class="form-control" type="text" name="bulan" id="bulan" required autocomplete="off">
-						<label for="name" style="margin-top: 10px;">Penjualan Dry Food:</label>
-						<input class="form-control" type="number" name="dry_food" id="dry_food" required autocomplete="off">
-						<label for="name" style="margin-top: 10px;">Penjualan Wet Food:</label>
-						<input class="form-control" type="number" name="wet_food" id="wet_food" required autocomplete="off">
+						<label for="name" style="margin-top: 10px;">Bolt Ikan (kg):</label>
+						<input class="form-control" type="number" name="bolt_ikan" id="bolt_ikan" required autocomplete="off">
+						<label for="name" style="margin-top: 10px;">Whiskas Jun 85 gr (pcs):</label>
+						<input class="form-control" type="number" name="whiskas" id="whiskas" required autocomplete="off">
+						<label for="name" style="margin-top: 10px;">Ciao 15gr (pcs):</label>
+						<input class="form-control" type="number" name="ciao" id="ciao" required autocomplete="off">
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary" name="submit">Save</button>
 					</div>
 				</form>
@@ -139,8 +143,9 @@ $data = $m_rekap->get_tabel();
 				$('#type').val('add');
 				$('#tahun').val('');
 				$('#bulan').val('');
-				$('#dry_food').val(0);
-				$('#wet_food').val(0);
+				$('#bolt_ikan').val(0);
+				$('#whiskas').val(0);
+				$('#ciao').val(0);
 			})
 
 			$('.editBtn').on('click', function() {
@@ -157,8 +162,9 @@ $data = $m_rekap->get_tabel();
 				$('#type').val('edit');
 				$('#tahun').val(data[2]);
 				$('#bulan').val(data[3]);
-				$('#dry_food').val(parseInt(data[4]));
-				$('#wet_food').val(parseInt(data[5]));
+				$('#bolt_ikan').val(parseInt(data[4]));
+				$('#whiskas').val(parseInt(data[5]));
+				$('#ciao').val(parseInt(data[6]));
 			})
 
 			$('.deleteBtn').on('click', function() {

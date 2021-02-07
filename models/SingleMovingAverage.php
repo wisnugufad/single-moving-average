@@ -5,7 +5,7 @@ class SingleMovingAverage
 
   public $tempData = array();
 
-  public function countStart($data, $ma, $periode)
+  public function countStart($data, $ma, $periode,$tahun)
   {
     $space = count($data);
 
@@ -26,7 +26,7 @@ class SingleMovingAverage
 
     // menambahkan 1 index ke data
     for ($i = 0; $i < $periode; $i++) {
-      array_push($data, array($this->label_now($i), NULL));
+      array_push($data, array($this->label_template($i,$tahun), NULL));
     }
 
     return array(
@@ -183,6 +183,13 @@ class SingleMovingAverage
       'percent' => $percentError,
       'MAPE' => $MAPE
     );
+  }
+
+  public function label_template($i, $periode)
+  {
+    $bulan = $this->intToMonth($i);
+
+    return $bulan . ' (' . $periode . ')';
   }
 
   public function label_now($i)

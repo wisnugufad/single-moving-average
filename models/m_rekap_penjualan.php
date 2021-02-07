@@ -9,17 +9,20 @@ class m_rekap_penjualan extends Connection
 		parent::__construct();
   }
 
-  public function get_data($type)
+  public function get_data($type,$periode)
   {
-    $sql = 'SELECT ';
+    $sql = "SELECT ";
     //  * FROM tb_rekap_penjualan';
-    if ($type == 'dry_food') {
-      $sql .= 'id, bulan, tahun, dry_food as total_penjualan';
-    } else {
-      $sql .= 'id, bulan, tahun, wet_food as total_penjualan';
+    if ($type == 'bolt_ikan') {
+      $sql .= "id, bulan, tahun, bolt_ikan as total_penjualan";
+    } elseif ($type == 'whiskas') {
+      $sql .= "id, bulan, tahun, whiskas as total_penjualan";
+    }else {
+      $sql .= "id, bulan, tahun, ciao as total_penjualan";
     }
-    $sql .= ' FROM tb_rekap_penjualan';
-
+    $sql .= " FROM tb_rekap_penjualan";
+    $sql .= " WHERE tahun < '".$periode."' AND tahun >= '".($periode - 2)."' ";
+    
     $query = mysqli_query($this->koneksi,$sql);
     $result = array();
     while ($row = MYSQLI_FETCH_ASSOC($query)) {
@@ -27,7 +30,7 @@ class m_rekap_penjualan extends Connection
         $row['bulan'].' ('.$row['tahun'].')',
         $row['total_penjualan']
       ));
-    }
+    }   
 
     return $result;
   }
@@ -42,8 +45,9 @@ class m_rekap_penjualan extends Connection
         'id'=>$row['id'],
         'bulan'=>$row['bulan'],
         'tahun'=>$row['tahun'],
-        'dry_food'=>$row['dry_food'],
-        'wet_food'=>$row['wet_food']
+        'bolt_ikan'=>$row['bolt_ikan'],
+        'whiskas'=>$row['whiskas'],
+        'ciao'=>$row['ciao']
       ));
     }
 
@@ -60,6 +64,15 @@ class m_rekap_penjualan extends Connection
     }
 
     return $result;
+  }
+
+  public function get_min()
+  {
+    $sql = 'SELECT MIN(tahun) as tahun FROM tb_rekap_penjualan';
+    $query = mysqli_query($this->koneksi,$sql);
+    
+    $row = MYSQLI_FETCH_ASSOC($query);
+    return $row;
   }
   
 }
