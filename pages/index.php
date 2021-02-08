@@ -100,10 +100,11 @@
 					</select>
 				</div> -->
 				<div class="col-md">
-					<label for="formGroupExampleInput">Tipe Makanan</label>
+					<label for="formGroupExampleInput">Nama Produk</label>
 					<select class="form-control form-control-sm" name="type">
-						<option value="dry_food">Dry Food</option>
-						<option value="wet_food">Wet Food</option>
+						<option value="bolt_ikan">Bolt Ikan</option>
+						<option value="whiskas">Whiskas Jun 85 gr</option>
+						<option value="ciao">Ciao 15gr</option>
 					</select>
 				</div>
 				<div class="col-md">
