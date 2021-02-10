@@ -9,7 +9,7 @@ class m_rekap_penjualan extends Connection
 		parent::__construct();
   }
 
-  public function get_data($type,$periode)
+  public function get_data($type)
   {
     $sql = "SELECT ";
     //  * FROM tb_rekap_penjualan';
@@ -21,7 +21,6 @@ class m_rekap_penjualan extends Connection
       $sql .= "id, bulan, tahun, ciao as total_penjualan";
     }
     $sql .= " FROM tb_rekap_penjualan";
-    $sql .= " WHERE tahun < '".$periode."' AND tahun >= '".($periode - 2)."' ";
     
     $query = mysqli_query($this->koneksi,$sql);
     $result = array();

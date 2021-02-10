@@ -1,37 +1,27 @@
-<?php
+<?php 
 
 class SingleMovingAverage
 {
+  
+  // public function index()
+  // {
+  //   # code...
+  // }
 
-  public $tempData = array();
-
-  public function countStart($data, $ma, $periode,$tahun)
+  public function countStart($data,$ma)
   {
     $space = count($data);
-
-    // // inisialiasi data
-    // for ($i=0; $i < $space; $i++) { 
-    //   array_push($this->tempData,$data[$i][1]);
-    // }
-    // for ($i=0; $i < $periode; $i++) { 
-    //   array_push($this->tempData,0);
-    // }
-
-    $this->tempData = $data;
-    $MA = $this->MovingAverage($space, $ma, $periode);
-    $error = $this->countError($this->tempData, $space, $ma, $MA, $periode);
-    $MAD = $this->MAD($error, $space, $ma, $periode);
-    $MSE = $this->MSE($MAD['absError'], $space, $ma, $periode);
-    $MAPE = $this->MAPE($this->tempData, $MAD['absError'], $space, $ma, $periode);
-
+    $MA = $this->MovingAverage($data, $space, $ma);
+    $error = $this->countError($data,$space,$ma,$MA);
+    $MAD = $this->MAD($error,$space,$ma);
+    $MSE = $this->MSE($MAD['absError'],$space,$ma);
+    $MAPE = $this->MAPE($data,$MAD['absError'],$space,$ma);
+    
     // menambahkan 1 index ke data
-    for ($i = 0; $i < $periode; $i++) {
-      array_push($data, array($this->label_template($i,$tahun), NULL));
-    }
-
+    array_push($data, array($this->label_now(), NULL));
     return array(
-      'data' => $data,
-      'MA' => $MA,
+      'data'=>$data,
+      'MA'=>$MA,
       'error' => $error,
       'abs' => $MAD['absError'],
       'MAD' => $MAD['MAD'],
@@ -42,56 +32,36 @@ class SingleMovingAverage
     );
   }
 
-  public function MovingAverage($index, $ma, $periode)
+  public function MovingAverage($data,$index,$ma)
   {
     // sediakan tempat untuk data + 1
     $MA = array();
-    $MA = array_fill(0, $index + $periode, NULL);
+    $MA = array_fill(0,$index + 1,NULL);
 
     // looping
-    for ($i = $ma - 1; $i < $index; $i++) {
+    for ($i=$ma-1; $i < $index; $i++) { 
 
       // inisiali dan reset temp
       $temp = 0;
 
       // temp sebanyak ma
-      for ($j = 0; $j < $ma; $j++) {
-        $temp += $this->tempData[$i - $j][1];
+      for ($j=0; $j < $ma; $j++) {
+        $temp += $data[ $i - $j ][1];
       }
-
+      
       // menentukan nilai rata rata MA
-      $MA[$i + 1] = round($temp / $ma,2);
-    }
-
-    $z = $index;
-    // untuk templating periode
-    for ($k = 0; $k < $periode; $k++) {
-
-      array_push($this->tempData, array(NULL, $MA[$z + $k]));
-
-      // inisiali dan reset temp
-      $temp = 0;
-
-      // temp sebanyak ma
-      for ($j = 0; $j < $ma; $j++) {
-        $temp += $this->tempData[$z + $k - $j][1];
-      }
-
-      // menentukan nilai rata rata MA
-      $MA[$z + 1 + $k] = round($temp / $ma,2);
+      $MA[$i+1] = round($temp/$ma);
     }
 
     return $MA;
   }
 
-  public function countError($data, $index, $ma, $MA, $periode)
+  public function countError($data,$index,$ma,$MA)
   {
     $error = array();
-    $error = array_fill(0, $index + $periode, NULL);
-
-    $loop = $index + $periode - 1;
+    $error = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i = $ma; $i < $loop; $i++) {
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
       $error[$i] = $data[$i][1] - $MA[$i];
     }
@@ -99,21 +69,19 @@ class SingleMovingAverage
     return $error;
   }
 
-  public function MAD($error, $index, $ma, $periode)
+  public function MAD($error,$index,$ma)
   {
     $absError = array();
-    $absError = array_fill(0, $index + $periode, NULL);
-
-    $loop = $index + $periode - 1;
+    $absError = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i = $ma; $i < $loop; $i++) {
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
       $absError[$i] = abs($error[$i]);
     }
-
+    
     // memisahkan variabel null ke dalam temp
     $tempAbsError = $absError;
-    for ($i = 0; $i < $ma; $i++) {
+    for ($i=0; $i < $ma; $i++) { 
       array_shift($tempAbsError);
     }
 
@@ -128,21 +96,19 @@ class SingleMovingAverage
     );
   }
 
-  public function MSE($absError, $index, $ma, $periode)
+  public function MSE($absError,$index,$ma)
   {
     $powError = array();
-    $powError = array_fill(0, $index + $periode, NULL);
-
-    $loop = $index + $periode - 1;
+    $powError = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i = $ma; $i < $loop; $i++) {
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
-      $powError[$i] = round(pow($absError[$i], 2),2);
+      $powError[$i] = pow($absError[$i],2);
     }
-
+    
     // memisahkan variabel null ke dalam temp
     $tempPowError = $powError;
-    for ($i = 0; $i < $ma; $i++) {
+    for ($i=0; $i < $ma; $i++) { 
       array_shift($tempPowError);
     }
 
@@ -157,21 +123,19 @@ class SingleMovingAverage
     );
   }
 
-  public function MAPE($data, $absError, $index, $ma, $periode)
+  public function MAPE($data,$absError,$index,$ma)
   {
     $percentError = array();
-    $percentError = array_fill(0, $index + $periode + 1, NULL);
-
-    $loop = $index + $periode - 1;
+    $percentError = array_fill(0,$index + 1,NULL);
     // looping
-    for ($i = $ma; $i < $loop; $i++) {
+    for ($i=$ma; $i < $index ; $i++) { 
       // menentukan nilai error
-      $percentError[$i] = round($absError[$i] / $data[$i][1] * 100, 2);
+      $percentError[$i] = round($absError[$i] / $data[$i][1] * 100 , 2);
     }
-
+    
     // memisahkan variabel null ke dalam temp
     $tempPercentError = $percentError;
-    for ($i = 0; $i < $ma; $i++) {
+    for ($i=0; $i < $ma; $i++) { 
       array_shift($tempPercentError);
     }
 
@@ -179,28 +143,20 @@ class SingleMovingAverage
     $tempPer = array_sum($tempPercentError);
     $count = count($tempPercentError);
     $MAPE = $tempPer / $count;
+
     return array(
       'percent' => $percentError,
       'MAPE' => $MAPE
     );
   }
 
-  public function label_template($i, $periode)
-  {
-    $bulan = $this->intToMonth($i);
-
-    return $bulan . ' (' . $periode . ')';
-  }
-
-  public function label_now($i)
+  public function label_now()
   {
     $tanggal = new \DateTime('now');
-    $interval = 'P'.$i.'M';
-    $tanggal = $tanggal->add(new DateInterval($interval));
     $bulan = $this->intToMonth($tanggal->format('m') - 1);
     $tahun = $tanggal->format('Y');
 
-    return $bulan . ' (' . $tahun . ')';
+    return $bulan.' ('.$tahun.')';
   }
 
   public function intToMonth($i)
@@ -245,3 +201,5 @@ class SingleMovingAverage
     }
   }
 }
+
+?>

@@ -16,14 +16,24 @@
 	if (isset($_POST['generate'])) {
 
 		$type = $_POST['type'];
-		$tahun_prediksi = $_POST['periode'];
-		$data = $m_rekap->get_data($type,$tahun_prediksi);
+		// $tahun_prediksi = $_POST['periode'];
+		$data = $m_rekap->get_data($type);
 		$index = count($data);
 
-		$ma1 = $_POST['ma1'];
-
 		// perioder satu tahun jadi hardcode selama 12
-		$hasil = $sma->countStart($data,$ma1,12,$tahun_prediksi);
+		for ($i=3; $i < $index - 5; $i++) { 
+			$temp = $sma->countStart($data,$i);
+
+			if ($i !== 3) {
+				if ($hasil['MAPE'] > $temp['MAPE']) {
+					$hasil = $temp;
+					$ma1 = $i;
+				}
+			} else {
+				// inisialisasi awal untuk menentukan mape terendah
+				$hasil = $temp;
+			}
+		}
 		// $hasil2 = $sma->countStart($data,$ma2);
 
 		$label = array();
@@ -43,7 +53,7 @@
 		// foreach ($hasil2['MA'] as $value) {
 		// 	array_push($data3,$value);
 		// }
-
+		$length = count($data2);
 		$index = count($hasil['data']);
 	}
 
@@ -79,21 +89,11 @@
 		<!-- filter -->
 		<form action="" method="POST" class="form-group">
 		<div class="row">
-				<div class="col-md">
+				<!-- <div class="col-md">
 					<label for="formGroupExampleInput">MA data 1</label>
 					<select class="form-control form-control-sm" name="ma1" value="<?php isset($_POST['ma1'])?$ma1:5; ?>" >
 						<?php
 							for($i = 3; $i < 12; $i++) {
-								echo '<option value='.$i.' >'.$i.'</option>';
-							}
-						?>
-					</select>
-				</div>
-				<!-- <div class="col-md-3">
-					<label for="formGroupExampleInput">MA data 2</label>
-					<select class="form-control form-control-sm" name="ma2" value="<?php echo $ma2 ?>">
-						<?php
-							for($i = 5; $i < $index - 5; $i++) {
 								echo '<option value='.$i.' >'.$i.'</option>';
 							}
 						?>
@@ -107,14 +107,14 @@
 						<option value="ciao">Ciao 15gr</option>
 					</select>
 				</div>
-				<div class="col-md">
+				<!-- <div class="col-md">
 					<label>Tahun Prediksi</label>
 					<select class="form-control form-control-sm" name="periode" id="">
 					<?php for($i = $tahun_awal; $i <= $tahun_akhir; $i++){
 						echo '<option value="'.$i.'" >'.$i.'</option>';
 						} ?>
 					</select>
-				</div>
+				</div> -->
 				<input type="submit" class="btn btn-primary" name="generate" value="generate">
 		</div>
 		</form>
@@ -141,17 +141,17 @@
 			      </div>
 			    </div>
 			</div>
-			<!-- <div class="col-lg">
+			<div class="col-lg">
 								<div class="card text-white" style="background-color: #ff6a00;">
 						<div class="card-body" style="padding: 10px 20px;">
-			        <h6 class="card-title">Mape Prediksi MA(<?php echo $ma2 ?>)</h6>
+			        <h6 class="card-title">Prediksi penjualan Bulan <?php echo $label[$length - 1] ?></h6>
 			        <div class="card-text" align="right" style="font-size: 34px; font-weight: lighter;">
-			        	<?php echo $hasil2['MAPE'] ?></div>
+			        	<?php echo $data2[$length - 1] ?></div>
 			      </div>
 			    </div>
-			</div> -->
+			</div>
 		</div>
-
+		<h3>Hasil Perhitungan dengan MAPE terendah</h3>
 		<table class="table">
 		 <thead class="thead-dark">
 				<th style="width: 30px;">No</th>
@@ -220,7 +220,7 @@
 									],
 									borderWidth: 1
 							}, {
-									label: 'Pola Data Ramalan 1',
+									label: 'Pola Data Ramalan',
 									fill: false,
 									// borderDash: [5, 5],
 									data: <?php echo json_encode($data2); ?>,
